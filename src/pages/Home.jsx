@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Button, Input, Space, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts } from "../redux/products";
@@ -18,7 +18,7 @@ function Home() {
     setSortedInfo(sorter);
   };
 
-  const filterData = products.filter((item) =>
+  const filterData = products?.filter((item) =>
     item.name.toLowerCase().includes(searchText?.toLowerCase())
   );
 
@@ -38,6 +38,11 @@ function Home() {
       title: "Price",
       dataIndex: "price",
       key: "price",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Action",
@@ -66,6 +71,7 @@ function Home() {
 
   return (
     <>
+      {products.length < 0 && <>Loading....</>}
       {contextHolder}
       <Space style={{ margin: "10px 0px" }}>
         <Input

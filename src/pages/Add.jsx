@@ -54,7 +54,10 @@ function Add() {
             },
           ]}
         >
-          <Input />
+          <Input type="number" />
+        </Form.Item>
+        <Form.Item name="description" label="Description">
+          <Input.TextArea />
         </Form.Item>
         <Form.Item label=" ">
           <Button type="primary" htmlType="submit">

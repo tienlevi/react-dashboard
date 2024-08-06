@@ -8,7 +8,7 @@ import useMessage from "antd/es/message/useMessage";
 function Edit() {
   const { id } = useParams();
   const [message, contextHolder] = useMessage();
-  const { products } = useSelector((state) => state.products);
+  const { products, loading } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -16,13 +16,14 @@ function Edit() {
   useEffect(() => {
     dispatch(getProductById(id));
   }, []);
-  console.log(products);
 
   const onSubmit = (data) => {
     dispatch(editProduct(data));
     navigate("/");
     message.success("Sửa thành công");
   };
+
+  if (loading) return <>Loading...</>;
 
   return (
     <>
@@ -39,10 +40,10 @@ function Edit() {
         wrapperCol={{
           flex: 1,
         }}
-        colon={false}
         style={{
           maxWidth: 600,
         }}
+        initialValues={products}
         onFinish={onSubmit}
       >
         <Form.Item
@@ -66,6 +67,9 @@ function Edit() {
           ]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item name="description" label="Description">
+          <Input.TextArea style={{ resize: "none" }} />
         </Form.Item>
         <Form.Item label=" ">
           <Button type="primary" htmlType="submit">
